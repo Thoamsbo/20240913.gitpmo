@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="bcs_document_tree_view">
+        <field name="name">文档</field>
+        <field name="model">bcs_document</field>
+        <field name="arch" type="xml">
+            <tree>
+                
+                <field name="item_number"/>
+                <field name="state"/>
+                <field name="major_rev"/> 
+                <field name="name"/>
+                <field name="classification"/>           
+                <field name="description"/>                   
+                <field name="native_file" />  
+				
+                <field name="bcs_isrestricted" />                  
+                <field name="has_change_pending" />                  
+                <field name="has_files" />                      
+                <field name="cn_productline" />                        
+                <field name="create_uid" />                       
+                <field name="create_date" />                        
+                <field name="x_thomas" />         
+            </tree>
+        </field>
+    </record>    
+    <record model="ir.ui.view" id="bcs_document_form_view">
+        <field name="name">文档</field>
+        <field name="model">bcs_document</field>
+        <field name="arch" type="xml">
+            <form>
+            	<sheet>
+            		<group>
+	                <group>
+			                <field name="name"/>
+			                <field name="description"/>                      
+                            <field name="cn_productline" />                         
+                            <field name="create_uid" />                       
+                            <field name="create_date" />                        
+                            <field name="x_thomas" /> 														
+	                </group>
+	                <group>
+	                		<field name="item_number"/>  
+			                <field name="major_rev"/>
+			                <field name="state"/> 
+			                <field name="classification"/>	
+				            <field name="bcs_isrestricted" />                  
+                            <field name="has_change_pending" />                  
+                            <field name="has_files" /> 			
+							
+			                <!--file显示的配置手法 filepropname,file namestring-->	
+			                <field widget="file" filename="native_file_filename" name="native_file"/>
+			                <field widget="file" invisible="True" name="native_file_filename"/> 							
+	                </group>
+                </group>
+                <notebook>
+                 <page string="关联工程图" name="关联工程图" groups="base.group_no_one">
+                    <field name="cn_document2cadship">
+                        <tree> 
+                        	<control>
+                                <create name="add_cn_document2cadship_control" string="新增关联工程图"/>                                
+                            </control>
+                        		<field name="name"/>                          	                   	
+                            <field name="item_number"/>  
+                           	<field name="major_rev"/>
+						    <field name="state"/> 
+						    <field name="classification"/>
+			                			<!--field widget="file" invisible="True" name="file_filename"/-->
+                        </tree>
+                    </field>
+                </page>              
+                	
+                <page string="附件" name="附件" groups="base.group_no_one">
+                    <field name="bcs_document_files">
+                        <tree>                           	                   	
+                            <field name="file_filename"/>
+                        </tree>
+                    </field>
+                </page>
+				
+<!-- 				<page string="关联herbert" name="关联herbert" groups="base.group_no_one">
+                    <field name="x_herbert">
+                        <tree> 
+                       <control>
+                            <create name="add_x_herbert_control" string="新增关联Herbert"/>                                
+                       </control>
+                        	<field name="x_name"/>
+                            <field name="x_select"/>
+                            <field name="x_thomas"/>
+                        </tree>
+                    </field>
+                </page> -->
+				
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>  
+    
+     <record model="ir.ui.view" id="bcs_document_files_form_view">
+        <field name="name">文档附件</field>
+        <field name="model">bcs_document.files</field>
+        <field name="arch" type="xml">
+            <form>
+            	<sheet>
+	              <group>
+	                 <field widget="file" filename="file_filename" name="file"/>
+		               <field widget="file" invisible="True" name="file_filename"/> 			                
+	              </group>
+                </sheet>
+            </form>
+        </field>
+    </record>   
+    
+   <record id="bcs_document_tree_act_window" model="ir.actions.act_window">
+  	 <field name="name">文档</field>
+     <field name="res_model">bcs_document</field>  
+     <field name="view_mode">tree,form</field>
+  </record>
+  
+  <menuitem name="文档" id="bcs_document_menu_root" groups="base.group_user" sequence="15"/> 	
+  <menuitem name="文档" id="sec_bcs_document_menu" parent="bcs_document_menu_root"   	action="bcs_document_tree_act_window" sequence="15" />
+
+
+</odoo>
